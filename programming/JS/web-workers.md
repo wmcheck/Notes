@@ -39,7 +39,8 @@ const worker = new Worker('worker.js');
 ```
 
 ### Основные функции для обмена данными между потоками:
-#### метод для отправки сообщения из одного потока в другой
+
+Метод для отправки сообщения из одного потока в другой
 
 **postMessage(message: any, transfer: Transferable[]): void** 
 
@@ -53,12 +54,12 @@ const data = { text: 'Hello, World!', buffer };
 worker.postMessage(data, [buffer]);  
 ```
 
-#### слушатель отправки message
+Слушатель отправки message
 
 **onmessage: ((this: Worker, event: MessageEvent) => any) | null**
 
 - event — объект события полученный от worker/main thread
-- 
+ 
 ```javascript
 interface MessageEvent<T = any> extends Event {
     // Переданные данные
@@ -72,4 +73,41 @@ interface MessageEvent<T = any> extends Event {
     // Предоставляет информацию об отправителе сообщения, такую как, например, какое окно отправило событие
     readonly source: MessageEventSource | null;
 }
-```  
+```
+  
+### Пример использования
+
+Использования Dedicated Worker, на примере работы с изображением (пример максимально абстрактный, без конкретных реализаций, но демонстрирует некоторые возможности).
+
+Допустим необходимо сжать картинку, если она больше определенного размера, и при этом не блокировать основной поток.
+
+В основном потоке хэндлим событие выбора юзером файла изображения, отправляем его в Worker, и когда приходит обработанное изображение из Worker, добавляем эту картинку на страницу.
+
+***app.js***
+```javascript
+const imageProcessingWorker = new Worker('worker.js');
+
+const imageSelect = document.getElementById('image-select');
+
+imageSelect.addEventListener('change', function(event) {
+  const selectedImage = event.target.files[0];
+  imageProcessingWorker.postMessage(selectedImage);
+});
+
+imageProcessingWorker.onmessage = function(event) {
+  const processedImage = event.data;
+  const imageContainer = document.getElementById('image-container');
+  imageContainer.appendChild(processedImage);
+};
+```
+
+***worker.js***
+```javascript
+self.onmessage = function(event) {
+  const image = event.data;
+  // Функция, которая производит какие-то преобразования с картинкой, например сжатие
+  const processedImage = processImage(image)
+  
+  self.postMessage(processedImage);
+};
+```
