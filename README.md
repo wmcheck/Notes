@@ -8,14 +8,7 @@
 
 [Программирование](programming/README.md)
 
-```flowchart LR
-
-A[Hard] -->|Text| B(Round)
-B --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
+## Диаграмма
 ```mermaid
   graph TD;
       A-->B;
@@ -23,6 +16,8 @@ C -->|Two| E[Result 2]
       B-->D;
       C-->D;
 ```
+
+## Lbfuhfvvf
 
 ```mermaid
 flowchart LR
