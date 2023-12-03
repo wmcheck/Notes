@@ -1,6 +1,32 @@
 # Функции
 
-Что такое new 
+## как они работают в качестве конструкторов.
+
+```
+function Person(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+}
+
+const user = new Person('John', 'Doe');
+```
+
+Функция Person тут является конструктором и создает два поля в новом объекте
+
+Откуда взялся Person.prototype? При объявлении функции, у нее автоматически создается свойство prototype для того чтобы ее можно было использовать как конструктор (note 3), таким образом свойство prototype функции не имеет отношения к прототипу самой функции, а задает прототипы для дочерних объектов. Это позволит реализовывать наследование и добавлять новые методы, например так:
+![image](https://github.com/wmcheck/Notes/assets/2428660/a2923a4e-ba3c-4f39-b15c-636248d435e5)
+
+
+```
+Person.prototype.fullName = function () {
+    return this.firstName + ' ' + this.lastName;
+}
+```
+![image](https://github.com/wmcheck/Notes/assets/2428660/c16ee8b6-f7e6-4169-9b64-8efa1730c339)
+
+И теперь вызов user.fullName() вернет строку "John Doe".
+
+## Что такое new 
 
 На самом деле оператор new не таит в себе никакой магии. При вызове new выполняет несколько действий:
 
@@ -35,4 +61,39 @@ new Foo(); // true
 ```
 
 new.target будет undefined для обычного вызова функции, и ссылкой на саму функцию в случае вызова через new;
+
+## Наследование
+
+Зная все вышеперечисленное, можно сделать классическое наследование дочернего класса Student от класса Person. Для этого нужно
+
+
+Создать конструктор Student с вызовом логики конструктора Person
+Задать объекту `Student.prototype` прототип от `Person`
+Добавить новые методы к `Student.prototype`
+```
+function Student(firstName, lastName, grade) {
+    Person.call(this, firstName, lastName);
+    this.grade = grade;
+}
+
+// вариант 1
+Student.prototype = Object.create(Person.prototype, {
+    constructor: {
+        value:Student,
+        enumerable: false,
+        writable: true
+    }
+});
+
+// вариант 2
+Object.setPrototypeOf(Student.prototype, Person.prototype);
+
+Student.prototype.isGraduated = function() {
+    return this.grade === 0;
+}
+
+const student = new Student('Judy', 'Doe', 7);
+```
+![image](https://github.com/wmcheck/Notes/assets/2428660/8469fb61-ddc0-4bcd-8674-821f1a08baab)
+
 
