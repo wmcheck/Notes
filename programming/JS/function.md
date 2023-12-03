@@ -76,6 +76,7 @@ foo.__proto__ = baz;
 ```
 В консоли Chrome foo будет выглядеть следующим образом:
 
+![image](https://github.com/wmcheck/Notes/assets/2428660/e422731c-d607-4414-830e-b71d686581b1)
 
 
 А теперь уберем связь между baz и Object.prototype:
@@ -85,6 +86,7 @@ baz.__proto__ = null;
 ```
 И теперь в консоли Chrome видим следующий результат:
 
+![image](https://github.com/wmcheck/Notes/assets/2428660/9d9971b7-e972-4b6b-87af-63b2895c9e22)
 
 
 Связь с Object.prototype разорвана у baz и __proto__ возвращает undefined даже у дочернего объекта foo, однако Chrome все равно показывает что __proto__ есть. Скорее всего тут имеется в виду внутренний слот [[Prototype]], но для простоты это было изменено на __proto__, ведь если не извращаться с цепочкой прототипов, это будет верно.
