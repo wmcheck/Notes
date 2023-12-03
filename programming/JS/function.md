@@ -96,4 +96,42 @@ const student = new Student('Judy', 'Doe', 7);
 ```
 ![image](https://github.com/wmcheck/Notes/assets/2428660/8469fb61-ddc0-4bcd-8674-821f1a08baab)
 
+Фиолетовым цветом обозначены поля объекта (они все находятся в самом объекте, т.к. this у всей цепочки прототипов один), а методы желтым (находятся в прототипах соответствующих функций)
+Вариант 1 предпочтительнее, т.к. Object.setPrototypeOf может привести к проблемам с производительностью.
+
+## сахар к классу 
+
+Для того чтобы облегчить классическую схему наследование и предоставить более привычный синтаксис, были представлены классы, просто сравним код с примерами Person и Student: 
+
+```
+class Person {
+    constructor(firstName, lastName) {  
+        this.firstName = firstName; 
+        this.lastName = lastName;
+    }
+
+    fullName() {
+        return this.firstName + ' ' + this.lastName;
+    }
+}
+
+class Student extends Person {
+    constructor(firstName, lastName, grade) {
+        super(firstName, lastName);
+        this.grade = grade;
+    }
+
+    isGraduated() {
+        return this.grade === 0;
+    }
+}
+```
+
+Уменьшился не только бойлерплейт, но и поддерживаемость: 
+
+В отличие от функции конструктора, при вызове конструктора без new выпадет ошибка
+Родительский класс указывается ровно один раз при объявлении
+
+При этом цепочка прототипов получается идентичной примеру с явным указанием prototype у функций конструкторов.
+
 
