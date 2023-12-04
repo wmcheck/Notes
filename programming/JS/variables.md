@@ -13,12 +13,12 @@ console.log('1');
 function exampeFunc() {
   // функциональная
   console.log('2');
-}
 
-if (true) {
-  // блочная
-  console.log('3');
-  console.log('4');
+  if (true) {
+    // блочная
+    console.log('3');
+    console.log('4');
+  }
 }
 
 for (let i = 0; i <10; i++) {
