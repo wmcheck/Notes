@@ -11,7 +11,7 @@
 Эти методы нужно использовать вместо __proto__.
 
 ```JavaScript
-et animal = {
+let animal = {
   eats: true
 };
 
