@@ -26,3 +26,12 @@
 
 //9
 //8
+
+
+(function(){
+    console.log('start');
+    for (var i = 0; i < 100; i++ ) {
+        ((i) => setTimeout(() => console.log(i), timeout))(i);
+    }
+    console.log('end');
+})();
