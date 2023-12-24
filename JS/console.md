@@ -1,4 +1,4 @@
-# Console
+# Вывод в консоль
 
 console.log("%cAn Error Happened!", "font-size: 10px; margin: 30px 0; padding: 5px 20px; color: #fff; background: linear-gradient(0deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);")
 
